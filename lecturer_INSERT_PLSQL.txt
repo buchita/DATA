@@ -1,0 +1,26 @@
+alter session set current_schema = JDOYLE;
+
+--3
+create sequence lecturerid
+minvalue 1
+maxvalue 6
+start with 1
+increment by 1;
+
+
+--4
+
+DECLARE
+    v_lid dt2nn3_b2.lecturer.lecturer_id%TYPE;
+    v_lname dt2nn3_b2.lecturer.lecturer_name%TYPE:='&lecturer_name';
+    v_lemail dt2nn3_b2.lecturer.lecturer_email%TYPE:='&lecturer_email';
+    v_lh dt2nn3_b2.lecturer.lecturer_hours%TYPE:='&lecturer_hours';
+
+BEGIN
+    v_lid := 'L'||lecturerid.nextval;
+    insert into dt2nn3_b2.lecturer(lecturer_id, lecturer_name,lecturer_email, lecturer_hours)
+    values(v_lid,v_lname,v_lemail,v_lh);
+END;
+
+commit;
+    

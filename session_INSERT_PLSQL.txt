@@ -1,0 +1,28 @@
+alter session set current_schema = JDOYLE;
+
+
+--3
+create sequence sessionid
+minvalue 1
+maxvalue 6
+start with 1
+increment by 1;
+
+
+--4
+
+DECLARE
+    v_sid dt2nn3_b2.session_table.session_id%TYPE;
+    v_stype dt2nn3_b2.session_table.session_type%TYPE:='&Session_Type';
+    v_crn dt2nn3_b2.session_table.crn%TYPE:='&CRN';
+    v_dn dt2nn3_b2.session_table.day_name:='&Day_name';
+    
+
+BEGIN
+    v_lid := 'S'||sessionid.nextval;
+    insert into dt2nn3_b2.session_tabe(session_id, crn, day_name, session_type)
+    values(v_sid,v_crn,v_dn,v_stype);
+END;
+
+commit;
+    

@@ -1,0 +1,19 @@
+Alter session set current_schema = JDUGGAN;
+
+select * from dt2nn3_b2.room_table;
+--DELETE dt2nn3_b2.room_table WHERE R_NUM = V_Rno; 
+
+DECLARE
+    V_Rno dt2nn3_b2.ROOM_TABLE.R_NUM%TYPE :='&ROOMno';
+    V_loc dt2nn3_b2.ROOM_TABLE.R_LOCATION%TYPE :='&LOC';
+    V_Rtype dt2nn3_b2.ROOM_TABLE.ROOM_TYPE%TYPE :='&R_TYPE';
+    V_Rcap  dt2nn3_b2.ROOM_TABLE.ROOM_CAPACITY%TYPE :='&cap';
+    V_Rbook  dt2nn3_b2.ROOM_TABLE.ROOM_BOOKED%TYPE :='&booked';
+    V_blackbd  dt2nn3_b2.ROOM_TABLE.BLACKBOARD%TYPE :='&blackbd';
+    V_whitebd  dt2nn3_b2.ROOM_TABLE.WHITEBOARD%TYPE :='&whitebd';
+    V_datasc  dt2nn3_b2.ROOM_TABLE.DATASCREEN%TYPE :='&dataScreen';
+    V_datapro  dt2nn3_b2.ROOM_TABLE.DATAPROJECTOR%TYPE :='&dataProjecter';  
+BEGIN
+    insert into dt2nn3_b2.ROOM_TABLE VALUES(V_Rno, V_loc, V_Rtype, V_Rcap, V_Rbook, V_blackbd, V_whitebd, V_datasc, V_datapro);
+
+END;

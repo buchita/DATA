@@ -1,0 +1,14 @@
+Alter session set current_schema = JDUGGAN;
+
+select * from dt2nn3_b2.time_table;
+
+DECLARE
+    V_STARTT dt2nn3_b2.TIME_TABLE.START_TIME%TYPE :='&START_TIME';
+    V_ENDT dt2nn3_b2.TIME_TABLE.END_TIME%TYPE :='&END_TIME';
+    V_ROOMN dt2nn3_b2.TIME_TABLE.ROOM_NUM%TYPE :='&ROOM_NUM';
+    V_DAYN dt2nn3_b2.TIME_TABLE.DAY_NAME%TYPE :='&DAY_NAME';
+    
+BEGIN
+    insert into dt2nn3_b2.TIME_TABLE VALUES(V_STARTT, V_ENDT, V_ROOMN, V_DAYN);
+
+END;

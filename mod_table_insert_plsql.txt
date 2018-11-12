@@ -1,4 +1,5 @@
-
+select * from dt2nn3_b2.module_table;
+select * from DT2NN3_B2.LECTURER;
 --3
 create sequence MODID
 minvalue 1
@@ -13,9 +14,12 @@ DECLARE
     v_mtype dt2nn3_b2.module_table.mode_type%TYPE:='&mod_type';
     v_mcontact_hour dt2nn3_b2.module_table.contact_hour%TYPE:='&contact_hour';
     v_course_code dt2nn3_b2.class_table.course_code%TYPE:='&course_code';
+    v_msemester dt2nn3_b2.module_table.semester%TYPE:='&semester';
     v_lecturer_id dt2nn3_b2.lecturer.lecturer_id%TYPE:='&lecturer_id';
 
 BEGIN
     v_mcrn := 'crn'||modid.nextval;
-    insert into dt2nn3_b2.module_table(crn, mod_name, mode_type,contact_hour,course_code,lecturer_id)values(v_mcrn,v_mname, v_mtype, v_mcontact_hour, v_course_code, v_lecturer_id);
+    insert into dt2nn3_b2.module_table(crn, mod_name, mode_type,contact_hour,course_code,semester,lecturer_id)values(v_mcrn,v_mname, v_mtype, v_mcontact_hour, v_course_code, v_msemester, v_lecturer_id);
 END;
+
+commit;

@@ -24,7 +24,7 @@ MOD_NAME VARCHAR(20) NOT NULL,
 MODE_TYPE VARCHAR(20) NOT NULL
 CHECK (MODE_TYPE IN('Single-Semester','single-semester','single semester','Single Semester','Single semester','Linked-Semester','linked-semester','linked semester','Linked Semester','Linked semester')),
 CONTACT_HOUR NUMBER(2) NOT NULL,
-NUM_STUDENTS NUMBER(2),
+NUM_STUDENTS NUMBER(2) NOT NULL,
 SEMESTER NUMBER(1) NOT NULL
 CHECK(SEMESTER IN('1','2')),
 COURSE_CODE VARCHAR(5) NOT NULL,

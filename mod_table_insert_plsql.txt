@@ -1,17 +1,4 @@
 
---select * from lecturer;
---insert into lecturer(lecturer_id) values('l001');
---insert into lecturer(lecturer_id) values('l002');
-
---SELECT * FROM CLASS_TABLE;
---INSERT COURSES
---INSERT INTO CLASS_TABLE(COURSE_CODE, STAGE_NUM) VALUES('DT211','3');
---INSERT INTO CLASS_TABLE(COURSE_CODE, STAGE_NUM) VALUES('DT282','3');
-
-
-select * from module_table;
-delete  from module_table where lecturer_id ='l001';
-
 --3
 create sequence MODID
 minvalue 1
@@ -32,5 +19,3 @@ BEGIN
     v_mcrn := 'crn'||modid.nextval;
     insert into dt2nn3_b2.module_table(crn, mod_name, mode_type,contact_hour,course_code,lecturer_id)values(v_mcrn,v_mname, v_mtype, v_mcontact_hour, v_course_code, v_lecturer_id);
 END;
-
-

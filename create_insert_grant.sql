@@ -1,5 +1,6 @@
---creates, inserts and grants
+--Author: Buchita Gitchamnan, Jack Doyle, Jack Duggan
 
+--Creates, inserts and grants
 --1
 CREATE TABLE CLASS_TABLE
 (

@@ -11,12 +11,19 @@ DECLARE
     v_course_code dt2nn3_b2.class_table.course_code%TYPE:='&course_code';
     v_msemester dt2nn3_b2.module_table.semester%TYPE:='&semester';
     v_lecturer_id dt2nn3_b2.lecturer.lecturer_id%TYPE:='&lecturer_id';
-
+    CHECK_CONSTRAINT_VIOLATED EXCEPTION;
+    VALUE_ERROR EXCEPTION;
+    INVALID_NUMBER EXCEPTION;
+    
 BEGIN
     v_mcrn := 'crn'||modid.nextval;
     insert into dt2nn3_b2.module_table(crn, mod_name, mode_type,contact_hour,course_code,semester,lecturer_id)values(v_mcrn,v_mname, v_mtype, v_mcontact_hour, v_course_code, v_msemester, v_lecturer_id);
     COMMIT;
+    
 EXCEPTION 
+    WHEN CHECK_CONSTRAINT_VIOLATED THEN  
+    DBMS_OUTPUT.PUT_LINE('UPDATE failed due to check constraint violation');
+    
     WHEN VALUE_ERROR THEN
         DBMS_OUTPUT.PUT_LINE('VALUE ERROR');
         
@@ -36,13 +43,20 @@ END;
 DECLARE
     v_course_code dt2nn3_b2.class_table.course_code%TYPE:='&course_code';
     v_cstudent_num dt2nn3_b2.class_table.student_num%TYPE:='&Student_num';
+    CHECK_CONSTRAINT_VIOLATED EXCEPTION;
+    VALUE_ERROR EXCEPTION;
+    INVALID_NUMBER EXCEPTION;
 
 BEGIN
     UPDATE DT2NN3_B2.CLASS_TABLE
     SET student_num = v_cstudent_num
     WHERE course_code = v_course_code;
     COMMIT;
+        
 EXCEPTION 
+    WHEN CHECK_CONSTRAINT_VIOLATED THEN  
+    DBMS_OUTPUT.PUT_LINE('UPDATE failed due to check constraint violation');
+    
     WHEN VALUE_ERROR THEN
         DBMS_OUTPUT.PUT_LINE('VALUE ERROR');
         
@@ -50,11 +64,18 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('INVALID NUM');
     
     WHEN OTHERS THEN
-        dbms_output.put_line(SQLERRM);
+        dbms_output.put_line('error:' ||SQLERRM);
         
     ROLLBACK;
 
 END;
+
+
+
+
+
+
+
 
 
 
@@ -62,13 +83,22 @@ END;
 DECLARE
     v_crn dt2nn3_b2.module_table.crn%TYPE:='&CRN';
     v_lecturer_id dt2nn3_b2.lecturer.lecturer_id%TYPE:='&Lecturer_for_mod';
-
+    CHECK_CONSTRAINT_VIOLATED EXCEPTION;
+    VALUE_ERROR EXCEPTION;
+    INVALID_NUMBER EXCEPTION;
+    
 BEGIN
-    UPDATE DT2NN3_B2.MODULE_TABLE
-    SET LECTURER_ID = v_lecturer_id
-    WHERE crn = v_crn;
-    COMMIT;
+    
+        UPDATE DT2NN3_B2.MODULE_TABLE
+        SET LECTURER_ID = v_lecturer_id
+        WHERE crn = v_crn;
+        COMMIT;
+    
+         
 EXCEPTION 
+    WHEN CHECK_CONSTRAINT_VIOLATED THEN  
+    DBMS_OUTPUT.PUT_LINE('UPDATE failed due to check constraint violation');
+    
     WHEN VALUE_ERROR THEN
         DBMS_OUTPUT.PUT_LINE('VALUE ERROR');
         
@@ -76,10 +106,8 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('INVALID NUM');
     
     WHEN OTHERS THEN
-        dbms_output.put_line(SQLERRM);
+        dbms_output.put_line('error:' || SQLERRM);
         
     ROLLBACK;
 
 END;
-
-

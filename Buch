@@ -1,6 +1,11 @@
 --A school coordinator allocates modules to semesters and can allocate numbers to classes
 --and can allocate lecturers to modules. 
 
+--for this role, we need to grant a permission for school coodinator from group schema.
+--GRANT SELECT, INSERT ON MODULE_TABLE TO SCHOOLCOODINATOR
+--GRANT SELECT, INSERT ON CLASS_TABLE TO SCHOOLCOODINATOR
+--GRANT UPDATE ON CLASS_TABLE TO SCHOOLCOODINATOR
+--GRANT INSERT, UPDATE ON LECTURER TO SCHOOLCOODINATOR
 
 ----------insert the module-------------
 DECLARE
@@ -73,12 +78,6 @@ END;
 
 
 
-
-
-
-
-
-
 ------------update lecturer for module--------------
 DECLARE
     v_crn dt2nn3_b2.module_table.crn%TYPE:='&CRN';
@@ -93,7 +92,6 @@ BEGIN
         SET LECTURER_ID = v_lecturer_id
         WHERE crn = v_crn;
         COMMIT;
-    
          
 EXCEPTION 
     WHEN CHECK_CONSTRAINT_VIOLATED THEN  

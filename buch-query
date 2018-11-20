@@ -1,0 +1,85 @@
+
+------------------selection with restriction ( dealign with which rows to return)--------------------
+--displaying the modules which are lab on Friday
+SELECT * FROM DT2NN3_B2.SESSION_TABLE 
+JOIN DT2NN3_B2.MODULE_TABLE USING(CRN)
+WHERE DAY_NAME LIKE 'FRIDAY' AND SESSION_TYPE LIKE 'Lab';
+
+------------------projection ( dealing with which columns to return )-----------------------------------
+--get the course code and module name which mods are for DT211 in semester 1
+SELECT COURSE_CODE, MOD_NAME FROM DT2NN3_B2.MODULE_TABLE
+WHERE SEMESTER = '1' AND COURSE_CODE LIKE 'DT211';
+
+-----------------------Aggregation with filters on aggregates-----------------------------------
+--getting the average hour of the mod type such as single-semester or linked-semester where the students are more than 30
+SELECT MODE_TYPE, AVG(CONTACT_HOUR)
+FROM DT2NN3_B2.MODULE_TABLE
+WHERE NUM_STUDENTS>30
+GROUP BY MODE_TYPE;
+
+
+------------------------union--------------------------------
+--getting both results and combine
+--getting the DT211 and number of students in the class that is more than 30
+SELECT COURSE_CODE, MOD_NAME, NUM_STUDENTS 
+FROM DT2NN3_B2.MODULE_TABLE WHERE COURSE_CODE ='DT211'
+UNION
+SELECT COURSE_CODE, MOD_NAME, NUM_STUDENTS 
+FROM DT2NN3_B2.MODULE_TABLE WHERE NUM_STUDENTS >40;
+
+
+-----------------------minus--------------------------------
+--getting anything thats more than 40 students and not in DT211
+select course_code, mod_name, num_students from DT2NN3_B2.module_table where num_students>40
+minus
+select course_code, mod_name, num_students from dt2nn3_b2.module_Table where course_code = 'DT211';
+
+--getting anything thats in DT211 and no more than 40
+select course_code, mod_name, num_students from dt2nn3_b2.module_Table where course_code = 'DT211'
+minus
+select course_code, mod_name, num_students from DT2NN3_B2.module_table where num_students>40;
+
+
+---------------difference--------------------
+--getting the location and room num from room table where the room num is not used in time table
+select r_location, r_num from DT2NN3_B2.ROOM_TABLE
+where r_num not in(
+select room_num from DT2NN3_B2.time_table);
+
+
+
+---------------inner join----------------
+--joining 2 tables
+select * from dt2nn3_b2.module_table 
+inner join dt2nn3_b2.lecturer on dt2nn3_b2.module_table.lecturer_id = dt2nn3_b2.lecturer.lecturer_id 
+where num_students is not null ;
+
+
+
+---------------outter join------------------
+--joining the whole lot of session and mod
+select * from dt2nn3_b2.session_table
+full outer join dt2nn3_b2.module_table on dt2nn3_b2.session_table.crn = dt2nn3_b2.module_table.crn;
+
+-----------------semi join-------------------
+--“Semi” means that we don’t really join the right hand side, we only check if a join would yield results for any given tuple
+--getting the crns from the session table that are in mod table 
+select crn,mod_name from dt2nn3_b2.module_table
+where crn in (select crn from dt2nn3_b2.session_table);
+
+
+-----------------anti join--------------------
+--“Anti” means that we don’t really join the right hand side, we only check if a join would NOT yield results for any given tuple
+--selecting the ones that crns are not in session mod
+select crn,mod_name from dt2nn3_b2.module_table
+where crn not in(select crn from dt2nn3_b2.session_table);
+
+
+----------correlated sub query-------------
+--creating a view called mod
+create or replace view module as 
+(select  mod_name, num_students from dt2nn3_b2.module_table);
+
+--find the average of the overall students from the mod table then select the ones that are less than average
+select * from module
+where module.num_students < (select avg(num_students) from dt2nn3_b2.module_table);
